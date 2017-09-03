@@ -12,37 +12,39 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.ansh.pogodyn.models.AutoCompleteSearchModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private String apikey = "jPRAPCFDpaLuWPCyCVdNH0ayBXziM7QS";
-    private String location;
 
-    private Button button1;
-
-    //Retrofit retrofit = new Retrofit.Builder()
-    //        .baseUrl("http://dataservice.accuweather.com/")
-    //        .build();
-
-   // AccuService service = retrofit.create(AccuService.class);
-
-    String hintsArray[];
+    private String hintsArray[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hintsArray = new String[]{""};
-        button1 = (Button) this.findViewById(R.id.button);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://dataservice.accuweather.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final AccuService service = retrofit.create(AccuService.class);
+
 
         final AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hintsArray);
@@ -58,6 +60,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Log.d(textView.toString(), charSequence.toString());
+
+                Call<List<AutoCompleteSearchModel>> response = service.loadCities(apikey, charSequence.toString());
+                response.enqueue(new Callback<List<AutoCompleteSearchModel>>() {
+                    @Override
+                    public void onResponse(Call<List<AutoCompleteSearchModel>> call, Response<List<AutoCompleteSearchModel>> response) {
+                        Log.d("PAWEL", response.toString());
+                        ArrayList<String> currentlist = new ArrayList<String>();
+
+                        try {
+                            for (AutoCompleteSearchModel a : response.body()) {
+                                Log.d("Kolejny element odpowiedz", a.localizedName);
+                                currentlist.add(a.localizedName);
+                            }
+                        } catch (NullPointerException e){
+                            Log.e("Error", e.toString());
+                        }
+
+                        hintsArray = currentlist.toArray(new String[0]);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AutoCompleteSearchModel>> call, Throwable t) {
+                        Log.d("PAWEL", t.toString());
+
+                    }
+                });
 
             }
 
