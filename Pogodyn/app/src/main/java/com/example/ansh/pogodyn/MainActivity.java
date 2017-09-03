@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        hintsArray = new String[];
+        hintsArray = new String[]{""};
         button1 = (Button) this.findViewById(R.id.button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,23 +44,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
+        final AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hintsArray);
         textView.setAdapter(adapter);
 
         textView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d(textView.toString(), charSequence.toString());
 
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d(textView.toString(), charSequence.toString());
 
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                //Log.d(textView.toString(), charSequence.toString());
 
             }
         });
