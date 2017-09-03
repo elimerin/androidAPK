@@ -3,6 +3,8 @@ package com.example.ansh.pogodyn;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,16 +22,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Button button1;
 
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://dataservice.accuweather.com/")
-            .build();
+    //Retrofit retrofit = new Retrofit.Builder()
+    //        .baseUrl("http://dataservice.accuweather.com/")
+    //        .build();
 
-    AccuService service = retrofit.create(AccuService.class);
+   // AccuService service = retrofit.create(AccuService.class);
+
+    String hintsArray[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        hintsArray = new String[];
         button1 = (Button) this.findViewById(R.id.button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,10 +42,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        String[] countries = getResources().getStringArray(R.array.countries_array);
+
         AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, countries); //(this, android.R.layout.simple_dropdown_item_1line, service.loadCities(apikey, location));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hintsArray);
         textView.setAdapter(adapter);
+
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 }
