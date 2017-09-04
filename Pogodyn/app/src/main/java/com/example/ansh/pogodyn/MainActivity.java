@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String hintsArray[];
 
+    private AutoCompleteTextView textView;
+    private ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         final AccuService service = retrofit.create(AccuService.class);
 
 
-        final AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hintsArray);
+        textView = (AutoCompleteTextView)findViewById(R.id.autocomplete);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hintsArray);
         textView.setAdapter(adapter);
 
         textView.addTextChangedListener(new TextWatcher() {
@@ -77,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("Error", e.toString());
                         }
 
-                        hintsArray = currentlist.toArray(new String[0]);
+                        hintsArray = currentlist.toArray(new String[currentlist.size()]);
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
