@@ -80,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("Error", e.toString());
                         }
 
-                        hintsArray = currentlist.toArray(new String[currentlist.size()]);
-                        adapter.notifyDataSetChanged();
+                        ArrayAdapter<String> newAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line,
+                                currentlist.toArray(new String[currentlist.size()]));
+
+                        textView.setAdapter(newAdapter);
                     }
 
                     @Override
