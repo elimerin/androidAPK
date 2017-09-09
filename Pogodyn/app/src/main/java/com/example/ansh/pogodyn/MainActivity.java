@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("Error", e.toString());
                         }
 
-                        hintsArray = currentlist.toArray(new String[currentlist.size()]);
-                        adapter.notifyDataSetChanged();
+                        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(MainActivity.this,
+                                android.R.layout.simple_dropdown_item_1line, currentlist.toArray(new String[currentlist.size()]));
+                        textView.setAdapter(cityAdapter);
                     }
 
                     @Override
