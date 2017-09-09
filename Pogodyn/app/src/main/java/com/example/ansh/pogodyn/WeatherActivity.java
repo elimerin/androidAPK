@@ -40,6 +40,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<WeatherModel> call, Response<WeatherModel> response) {
                 Log.d("response", response.body().headline.text.toString());
+                //@ToDo generate view
             }
 
             @Override
