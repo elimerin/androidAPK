@@ -1,21 +1,21 @@
 package com.example.ansh.pogodyn;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.ansh.pogodyn.models.AutoCompleteSearchModel;
+import com.example.ansh.pogodyn.models.AutoCompleteSearch.AutoCompleteSearchModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private String apikey = "jPRAPCFDpaLuWPCyCVdNH0ayBXziM7QS";
 
     private String hintsArray[];
+    private HashMap<String, String> pairs;
 
     private AutoCompleteTextView textView;
     private ArrayAdapter<String> adapter;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hintsArray = new String[]{""};
+        pairs = new HashMap<String, String>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dataservice.accuweather.com/")
@@ -68,22 +70,21 @@ public class MainActivity extends AppCompatActivity {
                 response.enqueue(new Callback<List<AutoCompleteSearchModel>>() {
                     @Override
                     public void onResponse(Call<List<AutoCompleteSearchModel>> call, Response<List<AutoCompleteSearchModel>> response) {
-                        Log.d("PAWEL", response.toString());
                         ArrayList<String> currentlist = new ArrayList<String>();
 
                         try {
                             for (AutoCompleteSearchModel a : response.body()) {
                                 Log.d("Kolejny element odpowiedz", a.localizedName);
+                                Log.d("Kolejny element odpowiedz", a.key);
+                                pairs.put(a.localizedName, a.key);
                                 currentlist.add(a.localizedName);
                             }
                         } catch (NullPointerException e){
                             Log.e("Error", e.toString());
                         }
 
-                        ArrayAdapter<String> newAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line,
-                                currentlist.toArray(new String[currentlist.size()]));
-
-                        textView.setAdapter(newAdapter);
+                        hintsArray = currentlist.toArray(new String[currentlist.size()]);
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -97,8 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //Log.d(textView.toString(), charSequence.toString());
 
+            }
+        });
+
+        textView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                textView.showDropDown();
+                return false;
+            }
+        });
+
+
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                intent.putExtra("city", pairs.get(adapterView.getItemAtPosition(i).toString()));
+                startActivity(intent);
             }
         });
     }

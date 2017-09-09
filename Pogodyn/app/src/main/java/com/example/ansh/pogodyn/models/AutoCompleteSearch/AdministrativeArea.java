@@ -1,4 +1,4 @@
-package com.example.ansh.pogodyn.models;
+package com.example.ansh.pogodyn.models.AutoCompleteSearch;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by ariankozbial on 03.09.2017.
  */
 
-public class Country {
+public class AdministrativeArea {
     @SerializedName("ID")
     public String id;
 

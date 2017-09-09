@@ -1,4 +1,4 @@
-package com.example.ansh.pogodyn.models;
+package com.example.ansh.pogodyn.models.AutoCompleteSearch;
 
 import com.google.gson.annotations.SerializedName;
 
