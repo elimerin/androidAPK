@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
     <TextView
-        android:id="@+id/textVeiwData"
+        android:id="@+id/textViewData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <TextView
-        android:id="@+id/textViewTemperatura"
+        android:id="@+id/textViewTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>

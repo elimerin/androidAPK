@@ -1,6 +1,7 @@
 package com.example.ansh.pogodyn;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -16,6 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WeatherActivity extends AppCompatActivity {
 
     private String apikey = "jPRAPCFDpaLuWPCyCVdNH0ayBXziM7QS";
+    private String language = "pl";
+    private String details = "false";
+    private String metric = "true";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -23,6 +27,7 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
 
         String city = getIntent().getStringExtra("city");
+        String cityName = getIntent().getStringExtra("cityName");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dataservice.accuweather.com/")
@@ -31,7 +36,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         final AccuService service = retrofit.create(AccuService.class);
 
-        Call<WeatherModel> response = service.getWeather(city, apikey);
+        Call<WeatherModel> response = service.getWeather(city, apikey, language, details, metric);
 
         response.enqueue(new Callback<WeatherModel>() {
             @Override

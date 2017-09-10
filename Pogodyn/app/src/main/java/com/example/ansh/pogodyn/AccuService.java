@@ -16,5 +16,5 @@ public interface AccuService {
     Call<List<AutoCompleteSearchModel>> loadCities(@Query("apikey") String apikey, @Query("q") String location);
 
     @GET("forecasts/v1/daily/1day/{locationKey}")
-    Call<WeatherModel> getWeather(@Path("locationKey") String locationKey, @Query("apikey") String apikey);
+    Call<WeatherModel> getWeather(@Path("locationKey") String locationKey, @Query("apikey") String apikey, @Query("language") String language, @Query("details") String details, @Query("metric") String metric);
 }

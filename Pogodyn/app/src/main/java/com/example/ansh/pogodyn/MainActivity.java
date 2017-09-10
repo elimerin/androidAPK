@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
                 intent.putExtra("city", pairs.get(adapterView.getItemAtPosition(i).toString()));
+                intent.putExtra("cityName", adapterView.getItemAtPosition(i).toString());
                 startActivity(intent);
             }
         });
