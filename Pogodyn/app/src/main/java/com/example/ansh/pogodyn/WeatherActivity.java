@@ -58,7 +58,7 @@ public class WeatherActivity extends AppCompatActivity {
                 //@ToDo generate view
                 tvCity.setText(cityName);
                 tvDate.setText(response.body().dailyForecasts.get(0).date);
-                //tvTemperature.setText("Temperatura:   minimalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.minimum.value + "   maksymalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.maximum.value);
+                tvTemperature.setText("Temperatura:   minimalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.minimum.value) + "   maksymalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.maximum.value));
                 tvDescription.setText("Pogoda w dzień: " + response.body().dailyForecasts.get(0).day.iconPhrase + '\n' + "Pogoda w nocy: " + response.body().dailyForecasts.get(0).night.iconPhrase);
 
                 if (response.body().dailyForecasts.get(0).day.icon == 1){
