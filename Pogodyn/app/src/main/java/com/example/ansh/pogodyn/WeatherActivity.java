@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherActivity extends AppCompatActivity {
 
-    private String apikey = "jPRAPCFDpaLuWPCyCVdNH0ayBXziM7QS";
+    private String apikey = "zQVykuRd89VZRG1steXmJFH4J1puVtbn";
     private String language = "pl";
     private String details = "false";
     private String metric = "true";
@@ -57,9 +57,9 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("response", response.body().headline.text.toString());
                 //@ToDo generate view
                 tvCity.setText(cityName);
-                tvDate.setText(response.body().dailyForecasts.get(0).date);
-                tvTemperature.setText("Temperatura:   minimalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.minimum.value) + "   maksymalna: " + Integer.toString(response.body().dailyForecasts.get(0).temperature.maximum.value));
-                tvDescription.setText("Pogoda w dzień: " + response.body().dailyForecasts.get(0).day.iconPhrase + '\n' + "Pogoda w nocy: " + response.body().dailyForecasts.get(0).night.iconPhrase);
+                tvDate.setText(response.body().dailyForecasts.get(0).date + '\n' + '\n');
+                tvTemperature.setText('\n' + "Temperatura:" + '\n' + "     minimalna: " + Double.toString(response.body().dailyForecasts.get(0).temperature.minimum.value) + '\n' + "     maksymalna: " + Double.toString(response.body().dailyForecasts.get(0).temperature.maximum.value));
+                tvDescription.setText("Pogoda w dzień:" + '\n' + "     " + response.body().dailyForecasts.get(0).day.iconPhrase + '\n' + "Pogoda w nocy: " + '\n' + "     " + response.body().dailyForecasts.get(0).night.iconPhrase);
 
                 if (response.body().dailyForecasts.get(0).day.icon == 1){
                     ivIcon.setImageDrawable(getResources().getDrawable(R.drawable.one));
