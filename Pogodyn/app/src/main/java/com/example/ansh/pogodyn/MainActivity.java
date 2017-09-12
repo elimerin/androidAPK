@@ -28,7 +28,7 @@ import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String apikey = "zQVykuRd89VZRG1steXmJFH4J1puVtbn";
+    private String apikey = "vrgl1os2FfBIP3PPlsrl1ALd1tapKkAv";
 
     private String hintsArray[];
     private HashMap<String, String> pairs;

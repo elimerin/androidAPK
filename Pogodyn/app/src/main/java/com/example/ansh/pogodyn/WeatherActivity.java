@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherActivity extends AppCompatActivity {
 
-    private String apikey = "zQVykuRd89VZRG1steXmJFH4J1puVtbn";
+    private String apikey = "vrgl1os2FfBIP3PPlsrl1ALd1tapKkAv";
     private String language = "pl";
     private String details = "false";
     private String metric = "true";
